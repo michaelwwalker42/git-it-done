@@ -2,6 +2,7 @@ var userFormEl = document.querySelector("#user-form");
 var nameInputEl = document.querySelector("#username");
 var repoContainerEl = document.querySelector("#repos-container");
 var repoSearchTerm = document.querySelector("#repo-search-term");
+//---------------------------------------formSubmitHandler function-------------------------------------------
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
@@ -16,7 +17,9 @@ var formSubmitHandler = function (event) {
         alert("Please enter a GitHub username");
     }
 };
+//----------------------------------End formSubmitHandler function----------------------------------------------
 
+//-------------------------------------- getUserRepos function--------------------------------------------------
 
 var getUserRepos = function (user) {
     // format the github api url
@@ -39,6 +42,9 @@ var getUserRepos = function (user) {
             alert("Unable to connect to GitHub");
         });
 };
+//------------------------------------End getUserRepos function--------------------------------------------------
+
+//---------------------------------------------displayRepos function---------------------------------------------
 
 var displayRepos = function (repos, searchTerm) {
     // check if api returned any repos
@@ -56,8 +62,9 @@ var displayRepos = function (repos, searchTerm) {
         var repoName = repos[i].owner.login + "/" + repos[i].name;
 
         // create a container for each repo
-        var repoEl = document.createElement("div");
+        var repoEl = document.createElement("a");
         repoEl.classList = "list-item flex-row justify-space-between align-center";
+        repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
 
         // create a span element to hold repository name
         var titleEl = document.createElement("span");
@@ -84,5 +91,7 @@ var displayRepos = function (repos, searchTerm) {
         repoContainerEl.appendChild(repoEl);
     }
 };
+//------------------------------------------End displayRepos function-------------------------------------------
+
 
 userFormEl.addEventListener("submit", formSubmitHandler);
